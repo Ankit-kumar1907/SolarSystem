@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -21,26 +20,29 @@ const pointLight = new THREE.PointLight(0xffffff, 5000, 500);
 scene.add(pointLight);
 
 const cubeTextureLoader = new THREE.CubeTextureLoader();
+// FIXED: Removed the leading slashes so the space background works on GitHub Pages
 scene.background = cubeTextureLoader.load([
-    '/img/stars.jpg',
-    '/img/stars.jpg',
-    '/img/stars.jpg',
-    '/img/stars.jpg',
-    '/img/stars.jpg',
-    '/img/stars.jpg'
+    'img/stars.jpg',
+    'img/stars.jpg',
+    'img/stars.jpg',
+    'img/stars.jpg',
+    'img/stars.jpg',
+    'img/stars.jpg'
 ]);
 
 const textureLoader = new THREE.TextureLoader();
 
 // --- THE SUN ---
 const sunGeo = new THREE.SphereGeometry(16, 30, 30);
-const sunMat = new THREE.MeshBasicMaterial({ map: textureLoader.load('/img/sun.jpg') });
+// FIXED: Removed the leading slash from the path
+const sunMat = new THREE.MeshBasicMaterial({ map: textureLoader.load('img/sun.jpg') });
 const sun = new THREE.Mesh(sunGeo, sunMat);
 scene.add(sun);
 
 // --- MERCURY ---
 const mercuryGeo = new THREE.SphereGeometry(3.2, 30, 30);
-const mercuryMat = new THREE.MeshStandardMaterial({ map: textureLoader.load('/img/mercury.jpg') });
+// FIXED: Removed the leading slash from the path
+const mercuryMat = new THREE.MeshStandardMaterial({ map: textureLoader.load('img/mercury.jpg') });
 const mercury = new THREE.Mesh(mercuryGeo, mercuryMat);
 const mercuryObj = new THREE.Object3D();
 mercuryObj.add(mercury);
@@ -68,7 +70,6 @@ function createPlanet(size, texturePath, position, ring) {
         });
         const ringMesh = new THREE.Mesh(ringGeo, ringMat);
         
-        
         obj.add(ringMesh);
         ringMesh.position.x = position;
         ringMesh.rotation.x = -0.5 * Math.PI;
@@ -77,27 +78,26 @@ function createPlanet(size, texturePath, position, ring) {
 }
 
 // --- GENERATE ALL REMAINING PLANETS ---
-const venus = createPlanet(5.8, '/img/venus.jpg', 44);
-const earth = createPlanet(6, '/img/earth.jpg', 62);
-const mars = createPlanet(4, '/img/mars.jpg', 78);
-const jupiter = createPlanet(12, '/img/jupiter.jpg', 106);
+// FIXED: Removed leading slashes from all texture argument strings below
+const venus = createPlanet(5.8, 'img/venus.jpg', 44);
+const earth = createPlanet(6, 'img/earth.jpg', 62);
+const mars = createPlanet(4, 'img/mars.jpg', 78);
+const jupiter = createPlanet(12, 'img/jupiter.jpg', 106);
 
-
-const saturn = createPlanet(10, '/img/saturn.jpg', 138, {
+const saturn = createPlanet(10, 'img/saturn.jpg', 138, {
     innerRadius: 13,
     outerRadius: 22,
-    texture: '/img/saturn ring.png'
+    texture: 'img/saturn ring.png'
 });
 
-
-const uranus = createPlanet(7, '/img/uranus.jpg', 176, {
+const uranus = createPlanet(7, 'img/uranus.jpg', 176, {
     innerRadius: 9,
     outerRadius: 15,
-    texture: '/img/uranus ring.png'
+    texture: 'img/uranus ring.png'
 });
 
-const neptune = createPlanet(7, '/img/neptune.jpg', 206);
-const pluto = createPlanet(2.8, '/img/pluto.jpg', 226);
+const neptune = createPlanet(7, 'img/neptune.jpg', 206);
+const pluto = createPlanet(2.8, 'img/pluto.jpg', 226);
 
 function animate(){
     // Individual spins
