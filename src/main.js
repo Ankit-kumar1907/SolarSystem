@@ -1,25 +1,20 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-// 1. INITIALIZE LOADING MANAGER
 const loadingManager = new THREE.LoadingManager();
 
 const progressBar = document.getElementById('progress-bar');
 const loadingScreen = document.getElementById('loading-screen');
 
-// Updates the progress bar status value as individual files finish downloading
 loadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
     const progressPercentage = (itemsLoaded / itemsTotal) * 100;
     progressBar.value = progressPercentage;
 };
 
-// Gracefully hides the overlay container once EVERYTHING is loaded completely
 loadingManager.onLoad = function() {
     loadingScreen.style.display = 'none';
 };
 
-// 2. PASS LOADING MANAGER TO YOUR LOADERS
-// By passing 'loadingManager' into the constructor brackets, these loaders automatically report back to your manager functions!
 const cubeTextureLoader = new THREE.CubeTextureLoader(loadingManager);
 const textureLoader = new THREE.TextureLoader(loadingManager);
 
@@ -108,13 +103,13 @@ const jupiter = createPlanet(12, 'img/jupiter.jpg', 106);
 const saturn = createPlanet(10, 'img/saturn.jpg', 138, {
     innerRadius: 13,
     outerRadius: 22,
-    texture: 'img/saturn ring.png'
+    texture: 'img/saturn-ring.png'
 });
 
 const uranus = createPlanet(7, 'img/uranus.jpg', 176, {
     innerRadius: 9,
     outerRadius: 15,
-    texture: 'img/uranus ring.png'
+    texture: 'img/uranus-ring.png'
 });
 
 const neptune = createPlanet(7, 'img/neptune.jpg', 206);
