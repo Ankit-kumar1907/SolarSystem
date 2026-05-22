@@ -1,6 +1,29 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
+// 1. INITIALIZE LOADING MANAGER
+const loadingManager = new THREE.LoadingManager();
+
+const progressBar = document.getElementById('progress-bar');
+const loadingScreen = document.getElementById('loading-screen');
+
+// Updates the progress bar status value as individual files finish downloading
+loadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
+    const progressPercentage = (itemsLoaded / itemsTotal) * 100;
+    progressBar.value = progressPercentage;
+};
+
+// Gracefully hides the overlay container once EVERYTHING is loaded completely
+loadingManager.onLoad = function() {
+    loadingScreen.style.display = 'none';
+};
+
+// 2. PASS LOADING MANAGER TO YOUR LOADERS
+// By passing 'loadingManager' into the constructor brackets, these loaders automatically report back to your manager functions!
+const cubeTextureLoader = new THREE.CubeTextureLoader(loadingManager);
+const textureLoader = new THREE.TextureLoader(loadingManager);
+
+// --- RENDERER & SCENE SETUP ---
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -19,8 +42,6 @@ scene.add(ambientLight);
 const pointLight = new THREE.PointLight(0xffffff, 5000, 500); 
 scene.add(pointLight);
 
-const cubeTextureLoader = new THREE.CubeTextureLoader();
-// FIXED: Removed the leading slashes so the space background works on GitHub Pages
 scene.background = cubeTextureLoader.load([
     'img/stars.jpg',
     'img/stars.jpg',
