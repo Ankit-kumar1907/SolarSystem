@@ -46,8 +46,6 @@ scene.background = cubeTextureLoader.load([
     'img/stars.jpg'
 ]);
 
-const textureLoader = new THREE.TextureLoader();
-
 // --- THE SUN ---
 const sunGeo = new THREE.SphereGeometry(16, 30, 30);
 // FIXED: Removed the leading slash from the path
